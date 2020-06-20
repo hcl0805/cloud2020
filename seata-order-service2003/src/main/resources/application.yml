@@ -1,0 +1,48 @@
+server:
+  port: 2003
+
+spring:
+  application:
+    name: seata-account-service
+  cloud:
+    alibaba:
+      seata:
+        #自定义事务组名称需要与seata-server中的对应
+        tx-service-group: default
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_account?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+
+
+seata:
+  application-id: ${spring.application.name} # Seata 应用名称，默认使用 ${spring.application.name}
+  tx-service-group: default # Seata 事务组, 高版本没找到相关配置, 是否可配置未知 选用默认default
+  # 服务配置项
+  service:
+    # 虚拟组和分组的映射 1.0.0以上好像将vgroup-mapping 改为 vgroupMapping, 此处是否影响未测试
+    vgroupMapping:
+      # 此处Key对应 tx-service-group 的 Value, 此处 value 默认 default
+      default: default
+    # 分组和 Seata 服务的映射 默认端口8091
+    grouplist:
+      default: 127.0.0.1:8091
+
+
+
+
+feign:
+  hystrix:
+    enabled: false
+
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml

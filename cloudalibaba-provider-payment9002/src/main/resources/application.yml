@@ -1,0 +1,21 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: nacos-payment-provider
+  cloud:
+    nacos:
+      discovery:
+#        server-addr: localhost:8848 #配置Nacos地址
+
+#         lunix版本的nacos集群，访问的是nginx
+        server-addr: 192.168.3.174:1111 #注意，我的lunix使用的桥接模式，ip每天会变！！！
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+
+
